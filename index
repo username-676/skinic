@@ -1,1 +1,13 @@
-
+<!DOCTYPE html>
+<style>
+    h1 {
+        text-align: center;   
+    }
+    h2 { 
+        text-align: center;
+    }
+</style>
+<html>
+  <h1>SKINIC</h1>
+  <h2><i>Match your taste to your race</i></h2>
+</html>
