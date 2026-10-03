@@ -118,7 +118,7 @@
         <div class="div2">
             <p class="newplaylist">Your new playlist is just a swipe away.</p>
             <p></p>
-            <img src="images\index\blackguy.jpg" alt="blackguy">
+            <img src="images\index\black.jpg" alt="blackguy">
         </div>
        <script>
             const element = document.querySelector(".newplaylist");
