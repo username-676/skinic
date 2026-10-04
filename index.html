@@ -74,35 +74,79 @@
         background-color: #b68760;
         cursor: pointer;
     }
+    .disclaimer {
+        font-family: arial;
+        font-size: 15px;
+        color: #999793;
+        text-align: right;
+        position: absolute;
+        right: 20px;
+        top: 950px;
+        margin: 0;
+    }
     .div2 {
         margin-top: 550px;
         width: 100%;
-        height: 500px;
+        height: 1000px;
         background-color: #b68760;
         font-family: arial;
+        color: #fffbf5;
     }
     @keyframes appear {
         from {
-            top: 130px;
+            transform: translateY(60px);
             opacity: 0;
         }
         to {
-            top: 70px;
+            transform: translateY(0);
             opacity: 1;
         }
     }
-   .newplaylist {
-        font-family: georgia;
-        position: relative;
-        top: 130px;
-        color: #fffbf5;
+    .newplaylist {
+        font-family: Georgia;
         font-size: 40px;
         text-align: center;
+        position: relative;
+        top: 100px;
         opacity: 0;
     }
     
     .newplaylist.animate {
         animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .images {
+        justify-content: center;
+        margin-top: 200px;
+        display: flex;
+        gap: 20px;
+        opacity: 0;
+    }
+    .images.animate {
+        animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .raceimage {
+        border-radius: 20px;
+    }
+    .imagedesc {
+        font-family: arial;
+        font-size: 25px;
+        font-style: italic;
+        margin-top: 100px;
+        margin-left: 200px;
+        margin-right: 200px;
+        text-align: center;
+        opacity: 0;
+    }
+    .imagedesc.animate {
+        animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .div3 {
+        width: 100%;
+        height: 900px;
+        background-color: #472300;
+        font-family: arial;
+        color: #fffbf5;
     }
 </style>
 <html>
@@ -114,24 +158,51 @@
         </div>
         <p class="slogan">Match your taste to your race.</p>
         <p class="desc">Swipe, match, and see the music your race takes you.</p>
-        <p class="signup">Create an account</p>
+        <a href="#playlist">Create an account</a><p class="signup">Create an account</p>
+        <p class="disclaimer">All photos are of models and used for illustrative purposes only</p>
         <div class="div2">
             <p class="newplaylist">Your new playlist is just a swipe away.</p>
             <p></p>
-            <img src="images/black.jpg" alt="blackguy">
+            <div class="images">
+                <img src="https://i.imgur.com/hEpLckQ.png" alt="blackguy" class="raceimage">
+                <img src="https://i.imgur.com/2DJFko8.png" alt="blackguy" class="raceimage">
+                <img src="https://i.imgur.com/GB5peKE.png" alt="blackguy" class="raceimage">
+            </div>
+            <p class="imagedesc">Have you ever wondered what kind of music genre matches your skin color? At <b>SKINIC</b>, we believe your complexion may reveal more about your Spotify history than you ever realized.</p>
         </div>
-       <script>
-            const element = document.querySelector(".newplaylist");
+        <div class="div3">
+            
+        </div>
         
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    element.classList.add("animate");
-                } else {
-                    element.classList.remove("animate");
-                }
+        <script>
+            const elements = document.querySelectorAll(".newplaylist, .images, .imagedesc");
+        
+            let lastScrollY = window.scrollY;
+            let scrollingDown = true;
+        
+            window.addEventListener("scroll", () => {
+                scrollingDown = window.scrollY > lastScrollY;
+                lastScrollY = window.scrollY;
             });
         
-            observer.observe(element);
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+        
+                    // Entering viewport while scrolling DOWN
+                    if (entry.isIntersecting && scrollingDown) {
+                        entry.target.classList.add("animate");
+                    }
+        
+                    // Leaving viewport while scrolling UP
+                    if (!entry.isIntersecting && !scrollingDown) {
+                        entry.target.classList.remove("animate");
+                    }
+                });
+            });
+        
+            elements.forEach((element) => {
+                observer.observe(element);
+            });
         </script>
     </body>
 </html>
