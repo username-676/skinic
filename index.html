@@ -189,14 +189,16 @@
     /* Hide everything before it animates */
     .div3-top img,
     .div3-text > *,
-    .songsdiv > * {
+    .dont,
+    .songdiv > * {
         opacity: 0;
     }
     
     /* Animate each element individually */
     .div3-top img.animate,
     .div3-text > *.animate,
-    .songsdiv > *.animate {
+    .dont.animate,
+    .songdiv > *.animate {
         animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     
@@ -271,7 +273,7 @@
         
         <script>
             const elements = document.querySelectorAll(
-    ".newplaylist, .images, .imagedesc, .div3-top img, .div3-text > *, .songsdiv > *"
+    ".newplaylist, .images, .imagedesc, .div3-top img, .div3-text > *, .dont, .songdiv > *"
 );
         
             let lastScrollY = window.scrollY;
