@@ -125,9 +125,6 @@
     .images.animate {
         animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .raceimage {
-        border-radius: 20px;
-    }
     .imagedesc {
         font-family: arial;
         font-size: 25px;
@@ -142,11 +139,80 @@
         animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .div3 {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
         width: 100%;
-        height: 900px;
+        height: 1500px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 100px;
         background-color: #472300;
         font-family: arial;
+        font-size: 25px;
+        line-height: 1.5;
         color: #fffbf5;
+        box-sizing: border-box;
+    }
+    
+    /* Image + text stay next to each other */
+    .div3-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 50px;
+        width: 100%;
+    }
+    
+    .div3 img {
+        width: 800px;
+        height: auto;
+        border-radius: 0px;
+        flex-shrink: 0;
+    }
+    
+    .div3-text {
+        flex: 1;
+    }
+    
+    .buthow {
+        margin-top: 0;
+        margin-bottom: 40px;
+        font-family: Georgia;
+        font-size: 60px;
+        text-align: center;
+    }
+    
+    .how {
+        font-style: italic;
+    }
+    
+    /* Hide everything before it animates */
+    .div3-top img,
+    .div3-text > *,
+    .songsdiv > * {
+        opacity: 0;
+    }
+    
+    /* Animate each element individually */
+    .div3-top img.animate,
+    .div3-text > *.animate,
+    .songsdiv > *.animate {
+        animation: appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    /* Song boxes */
+    .songdiv {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        width: 100%;
+    }
+    
+    .idkwhattonamethis {
+        width: 400px;
+        height: 600px;
+        background-color: blue;
     }
 </style>
 <html>
@@ -158,24 +224,46 @@
         </div>
         <p class="slogan">Match your taste to your race.</p>
         <p class="desc">Swipe, match, and see the music your race takes you.</p>
-        <a href="#playlist">Create an account</a><p class="signup">Create an account</p>
+        <p class="signup">Create an account</p>
         <p class="disclaimer">All photos are of models and used for illustrative purposes only</p>
         <div class="div2">
             <p class="newplaylist">Your new playlist is just a swipe away.</p>
             <p></p>
             <div class="images">
-                <img src="https://i.imgur.com/hEpLckQ.png" alt="blackguy" class="raceimage">
-                <img src="https://i.imgur.com/2DJFko8.png" alt="blackguy" class="raceimage">
-                <img src="https://i.imgur.com/GB5peKE.png" alt="blackguy" class="raceimage">
+                <img src="https://i.imgur.com/hEpLckQ.png" alt="example">
+                <img src="https://i.imgur.com/2DJFko8.png" alt="example">
+                <img src="https://i.imgur.com/GB5peKE.png" alt="example">
             </div>
             <p class="imagedesc">Have you ever wondered what kind of music genre matches your skin color? At <b>SKINIC</b>, we believe your complexion may reveal more about your Spotify history than you ever realized.</p>
         </div>
         <div class="div3">
-            
+            <div class="div3-top">
+                <img src="https://i.imgur.com/LRag8Wf.jpeg">
+        
+                <div class="div3-text">
+                    <p class="buthow">But how do we do it?</p>
+                    <p class="how">
+                        Our team of highly trained computer scientists have spent years
+                        developing <b>SKINIC</b>’s advanced musical matching technology.
+                        Using cutting-edge algorithms, extensive research, and an enormous
+                        database of songs, our system analyzes your pigmentation to
+                        determine which song it thinks you should listen to.
+                    </p>
+                </div>
+            </div>
+        
+            <div class="songdiv">
+                <div class="idkwhattonamethis"></div>
+                <div class="idkwhattonamethis"></div>
+                <div class="idkwhattonamethis"></div>
+            </div>
+        
         </div>
         
         <script>
-            const elements = document.querySelectorAll(".newplaylist, .images, .imagedesc");
+            const elements = document.querySelectorAll(
+    ".newplaylist, .images, .imagedesc, .div3-top img, .div3-text > *, .songsdiv > *"
+);
         
             let lastScrollY = window.scrollY;
             let scrollingDown = true;
@@ -183,25 +271,22 @@
             window.addEventListener("scroll", () => {
                 scrollingDown = window.scrollY > lastScrollY;
                 lastScrollY = window.scrollY;
-            });
         
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
+                elements.forEach((element) => {
+                    const rect = element.getBoundingClientRect();
         
-                    // Entering viewport while scrolling DOWN
-                    if (entry.isIntersecting && scrollingDown) {
-                        entry.target.classList.add("animate");
+                    // Scrolling DOWN:
+                    // Animate when the element reaches 20px above the bottom
+                    if (scrollingDown && rect.top <= window.innerHeight - 20) {
+                        element.classList.add("animate");
                     }
         
-                    // Leaving viewport while scrolling UP
-                    if (!entry.isIntersecting && !scrollingDown) {
-                        entry.target.classList.remove("animate");
+                    // Scrolling UP:
+                    // Reset when the element leaves through the bottom
+                    if (!scrollingDown && rect.top > window.innerHeight) {
+                        element.classList.remove("animate");
                     }
                 });
-            });
-        
-            elements.forEach((element) => {
-                observer.observe(element);
             });
         </script>
     </body>
